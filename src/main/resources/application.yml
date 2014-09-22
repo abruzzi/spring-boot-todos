@@ -1,0 +1,38 @@
+spring:
+   application.name: todos
+   profiles.active: development
+   main:
+     web-environment: true
+
+---
+
+spring:
+  profiles: development
+
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/todos
+    username: root
+    password:
+
+  jpa:
+     show-sql: true
+     hibernate:
+       ddl-auto: update
+
+---
+
+spring:
+  profiles: test
+
+  datasource:
+    driverClassName: org.hsqldb.jdbc.JDBCDriver
+    url: jdbc:hsqldb:mem:todos
+    username: sa
+    password:
+
+  jpa:
+    open-in-view: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
