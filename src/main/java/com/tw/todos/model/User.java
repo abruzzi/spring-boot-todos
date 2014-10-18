@@ -1,8 +1,6 @@
 package com.tw.todos.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class User {
@@ -10,10 +8,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Todo> todoList = new ArrayList<Todo>();
+    public User() {}
+
+    public User(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public long getId() {
         return id;
@@ -29,13 +32,5 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Todo> getTodoList() {
-        return todoList;
-    }
-
-    public void setTodoList(List<Todo> todoList) {
-        this.todoList = todoList;
     }
 }
