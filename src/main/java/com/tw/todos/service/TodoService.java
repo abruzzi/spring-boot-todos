@@ -14,4 +14,16 @@ public class TodoService {
     public Iterable<Todo> all() {
         return repository.findAll();
     }
+
+    public Todo get(Long id) {
+        return repository.findOne(id);
+    }
+
+    public Todo save(Todo todo) {
+        return repository.save(todo);
+    }
+
+    public void delete(Long id) {
+        repository.delete(id);
+    }
 }

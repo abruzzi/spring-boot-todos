@@ -3,19 +3,23 @@ package com.tw.todos.controller;
 import com.tw.todos.model.Todo;
 import com.tw.todos.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping(value="/todos")
 public class TodoController {
     @Autowired
     private TodoService service;
 
-    @RequestMapping
-    @ResponseBody
-    public Iterable<Todo> getTodos() {
+    @RequestMapping(method = RequestMethod.GET)
+    public Iterable<Todo> getAll() {
         return service.all();
     }
+
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Todo getOne(@PathVariable(value="id") Long id) {
+        return service.get(id);
+    }
+
 }
