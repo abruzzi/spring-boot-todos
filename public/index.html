@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Design</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="stylesheets/style.css" type="text/css" rel="stylesheet" >
+</head>
+<body>
+
+<div>
+
+    <script type="text/x-handlebars" data-template-name="todos">
+
+    {{input type="text" id="new-todo" placeholder="What needs to be done?"
+              value=description action="createTodo"}}
+    <ul>
+    {{#each}}
+        <li>{{description}}</li>
+    {{/each}}
+    </ul>
+    </script>
+
+    <script src="scripts/libs/jquery-1.10.2.js"></script>
+    <script src="scripts/libs/handlebars-1.1.2.js"></script>
+    <script src="scripts/libs/ember-1.7.0.js"></script>
+    <script src="scripts/libs/ember-data.js"></script>
+    <script src="scripts/app.js"></script>
+</div>
+</body>
+</html>
