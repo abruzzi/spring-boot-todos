@@ -1,9 +1,10 @@
 package com.tw.todos.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Todo {
+public class Todo implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,6 +15,12 @@ public class Todo {
 
     @Column(nullable = false)
     private String description;
+
+    public Todo() {}
+
+    public Todo(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;

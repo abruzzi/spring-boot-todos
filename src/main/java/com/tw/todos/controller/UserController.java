@@ -7,6 +7,9 @@ import com.tw.todos.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -18,13 +21,17 @@ public class UserController {
     private TodoService todoService;
 
     @RequestMapping(method=RequestMethod.GET)
-    public Iterable<User> getAll() {
-        return userService.findAll();
+    public Map<String, Iterable<User>> getAll() {
+        Map map = new HashMap();
+        map.put("users", userService.findAll());
+        return map;
     }
 
     @RequestMapping(value="{id}", method=RequestMethod.GET)
-    public User getOne(@PathVariable(value="id") Long id) {
-        return userService.findOne(id);
+    public Map<String, User> getOne(@PathVariable(value="id") Long id) {
+        Map map = new HashMap();
+        map.put("user", userService.findOne(id));
+        return map;
     }
 
     @RequestMapping(method=RequestMethod.POST)
@@ -33,9 +40,11 @@ public class UserController {
     }
 
     @RequestMapping(value="{id}/todos", method=RequestMethod.GET)
-    public Iterable<Todo> getAllTodos(@PathVariable(value="id") Long id) {
-        User user = new User(id, null);
-        return userService.getAllTodosFor(user);
+    public Map<String, Iterable<Todo>> getAllTodos(@PathVariable(value="id") Long id) {
+        User user = new User(id);
+        Map map = new HashMap();
+        map.put("todos", userService.getAllTodosFor(user));
+        return map;
     }
 
     @RequestMapping(value="{id}/todos", method=RequestMethod.POST)
@@ -45,6 +54,8 @@ public class UserController {
 
     @RequestMapping(value="{id}/todos/{todoId}", method=RequestMethod.GET)
     public Todo getTodo(@PathVariable(value="id") Long userId, @PathVariable(value="todoId") Long todoId) {
-        return userService.getTodoFor(userId, todoId);
+        User user = new User(userId);
+        Todo todo = new Todo(todoId);
+        return userService.getTodoFor(user, todo);
     }
 }

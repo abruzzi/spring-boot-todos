@@ -12,15 +12,41 @@
 
 <div>
 
-    <script type="text/x-handlebars" data-template-name="todos">
+    <script type="text/x-handlebars" data-template-name="index">
+        {{#link-to 'users'}}Users{{/link-to}}
+    </script>
 
-    {{input type="text" id="new-todo" placeholder="What needs to be done?"
-              value=description action="createTodo"}}
-    <ul>
-    {{#each}}
-        <li>{{description}}</li>
-    {{/each}}
-    </ul>
+    <script type="text/x-handlebars" data-template-name="users">
+      {{outlet}}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="users/index">
+        Users
+        <ul>
+          {{#each}}
+            <li>{{#link-to 'user' this}}{{name}}{{/link-to}}</li>
+          {{/each}}
+        </ul>
+        {{#link-to 'users.new'}}New User{{/link-to}}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="user/index">
+        {{name}}
+        <ul>
+        {{#each todo in todos}}
+        <li>{{#link-to 'user.todo' todo}}{{todo.description}}{{/link-to}}</li>
+        {{/each}}
+        </ul>
+        {{#link-to 'todos.new'}}New Todo{{/link-to}}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="todos/index">
+        Todos
+        <ul>
+        {{#each todo in todos}}
+        <li>{{#link-to 'todo' todo}}{{todo.description}}{{/link-to}}</li>
+        {{/each}}
+        </ul>
     </script>
 
     <script src="scripts/libs/jquery-1.10.2.js"></script>

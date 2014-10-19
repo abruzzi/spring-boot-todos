@@ -32,7 +32,7 @@ public class UserService {
         return todoRepository.findByUser(user);
     }
 
-    public Todo getTodoFor(Long userId, Long todoId) {
-        return null;
+    public Todo getTodoFor(User user, Todo todo) {
+        return todoRepository.findByUserAndId(user, todo.getId());
     }
 }

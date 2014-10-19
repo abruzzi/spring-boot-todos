@@ -1,9 +1,10 @@
 package com.tw.todos.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -13,9 +14,8 @@ public class User {
 
     public User() {}
 
-    public User(Long id, String name) {
+    public User(Long id) {
         this.id = id;
-        this.name = name;
     }
 
     public long getId() {

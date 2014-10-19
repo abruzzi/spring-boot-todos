@@ -1,45 +1,45 @@
-var Todos = Ember.Application.create();
-Todos.ApplicationAdapter = DS.FixtureAdapter.extend();
+var Todos = Ember.Application.create({
+    LOG_TRANSITIONS: true
+});
 
 Todos.Router.map(function() {
-  this.resource('todos', {path: '/'})
+	this.resource('users', function() {
+        this.route('new');
+    });
+
+    this.resource('user', {path: '/users/:user_id'}, function() {
+        this.resource('todos', function() {
+            this.route('new');
+        });
+        this.route('todo', {path: 'todos/:todo_id'});
+    })
+});
+
+Todos.UsersRoute = Ember.Route.extend({
+	model: function() {
+		return this.store.find('user');
+	}
+});
+
+Todos.UsersIndexRoute=Ember.Route.extend({
+    model: function(){
+        return this.modelFor('users');
+    }
+});
+
+Todos.UserIndexRoute = Ember.Route.extend({
+    model: function() {
+        return this.modelFor('user');
+    }
+});
+
+// data model
+Todos.User = DS.Model.extend({
+    name: DS.attr('string'),
+    todos: DS.hasMany('todo', {async: true})
 });
 
 Todos.Todo = DS.Model.extend({
-    description: DS.attr('string')
-});
-
-Todos.Todo.FIXTURES = [
-    {
-        id:1,
-        description: "Kill Bill"
-    },
-    {
-        id:2,
-        description: "Create a simple app based on ember"
-    }
-];
-
-Todos.TodosController = Ember.ArrayController.extend({
-    actions: {
-        createTodo: function() {
-            var description = this.get('description');
-            if (!description) { return false; }
-            if (!description.trim()) { return; }
-
-            var todo = this.store.createRecord('todo', {
-                description: description
-            });
-
-            this.set('description', '');
-
-            todo.save();
-        }
-    }
-});
-
-Todos.TodosRoute = Ember.Route.extend({
-    model: function() {
-        return this.store.find('todo');
-    }
+    description: DS.attr('string'),
+    user: DS.belongsTo('user')
 });

@@ -6,4 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface TodoRepository extends CrudRepository<Todo, Long> {
     Iterable<Todo> findByUser(User user);
+    Todo findByUserAndId(User user, Long id);
 }
